@@ -7,6 +7,7 @@ using OopFactory.X12.Hipaa.Common;
 
 namespace OopFactory.X12.Hipaa.Eligibility
 {
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class EligibilityBenefitAdditionalInformation
     {
         [XmlAttribute]

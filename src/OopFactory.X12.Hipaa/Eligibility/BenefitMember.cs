@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.Persistent.Base;
 using OopFactory.X12.Hipaa.Common;
 
 namespace OopFactory.X12.Hipaa.Eligibility
 {
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class BenefitMember : Member
     {
         public BenefitMember()
@@ -20,18 +26,25 @@ namespace OopFactory.X12.Hipaa.Eligibility
         [XmlAttribute]
         public string BirthSequenceNumber { get; set; }
 
+        [Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
+        [Appearance("ProviderInfo_Visibility", "NOT ProviderInfo.Exists()", Visibility = ViewItemVisibility.Hide)]
         public ProviderInformation ProviderInfo { get; set; }
 
-        [XmlElement(ElementName="Diagnosis")]
+        [XmlElement(ElementName = "Diagnosis")]
+        [Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
+        [Appearance("Diagnoses_Visibility", "NOT Diagnoses.Exists()", Visibility = ViewItemVisibility.Hide)]
         public List<Lookup> Diagnoses { get; set; }
 
         [XmlElement(ElementName = "RequestValidation")]
+        [Appearance("RequestValidations_Visibility", "NOT RequestValidations.Exists()", Visibility = ViewItemVisibility.Hide)]
         public new List<RequestValidation> RequestValidations { get; set; }
 
-        [XmlElement(ElementName="Date")]
+        [XmlElement(ElementName = "Date")]
+        [Appearance("Dates_Visibility", "NOT Dates.Exists()", Visibility = ViewItemVisibility.Hide)]
         public List<QualifiedDate> Dates { get; set; }
 
-        [XmlElement(ElementName="DateRange")]
+        [XmlElement(ElementName = "DateRange")]
+        [Appearance("DateRanges_Visibility", "NOT DateRanges.Exists()", Visibility = ViewItemVisibility.Hide)]
         public List<QualifiedDateRange> DateRanges { get; set; }
 
         #region PlanDate properties
@@ -40,23 +53,18 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "291");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
 
         [XmlAttribute(AttributeName = "PlanDate", DataType = "date")]
-        public DateTime SerializablePlanDate
-        {
-            get { return PlanDate ?? DateTime.MinValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public DateTime SerializablePlanDate => PlanDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializablePlanDateSpecified
-        {
-            get { return PlanDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializablePlanDateSpecified => PlanDate.HasValue;
+
         #endregion
 
         #region PlanBeginDate properties
@@ -65,23 +73,18 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "346");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
 
-        [XmlAttribute(AttributeName="PlanBeginDate", DataType="date")]
-        public DateTime SerializablePlanBeginDate
-        {
-            get { return PlanBeginDate ?? DateTime.MinValue; }
-            set { }
-        }
+        [XmlAttribute(AttributeName = "PlanBeginDate", DataType = "date")]
+        [Browsable(false)]
+        public DateTime SerializablePlanBeginDate => PlanBeginDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializablePlanBeginDateSpecified
-        {
-            get { return PlanBeginDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializablePlanBeginDateSpecified => PlanBeginDate.HasValue;
+
         #endregion
 
         #region PlanEndDate properties
@@ -90,23 +93,18 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "347");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
 
         [XmlAttribute(AttributeName = "PlanEndDate", DataType = "date")]
-        public DateTime SerializablePlanEndDate
-        {
-            get { return PlanEndDate ?? DateTime.MinValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public DateTime SerializablePlanEndDate => PlanEndDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializablePlanEndDateSpecified
-        {
-            get { return PlanEndDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializablePlanEndDateSpecified => PlanEndDate.HasValue;
+
         #endregion
 
         #region EligibilityDate properties
@@ -115,23 +113,18 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "307");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
 
         [XmlAttribute(AttributeName = "EligibilityDate", DataType = "date")]
-        public DateTime SerializableEligibilityDate
-        {
-            get { return EligibilityDate ?? DateTime.MinValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public DateTime SerializableEligibilityDate => EligibilityDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializableEligibilityDateSpecified
-        {
-            get { return EligibilityDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializableEligibilityDateSpecified => EligibilityDate.HasValue;
+
         #endregion
 
         #region EligibilityBeginDate properties
@@ -140,23 +133,17 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "356");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
-
+        [Browsable(false)]
         [XmlAttribute(AttributeName = "EligibilityBeginDate", DataType = "date")]
-        public DateTime SerializableEligibilityBeginDate
-        {
-            get { return EligibilityBeginDate ?? DateTime.MinValue; }
-            set { }
-        }
+        public DateTime SerializableEligibilityBeginDate => EligibilityBeginDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializableEligibilityBeginDateSpecified
-        {
-            get { return EligibilityBeginDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializableEligibilityBeginDateSpecified => EligibilityBeginDate.HasValue;
+
         #endregion
 
         #region EligibilityEndDate properties
@@ -165,23 +152,18 @@ namespace OopFactory.X12.Hipaa.Eligibility
             get
             {
                 var date = Dates.FirstOrDefault(d => d.Qualifier == "357");
-                return date == null ? (DateTime?)null : date.Date;
+                return date?.Date;
             }
         }
 
         [XmlAttribute(AttributeName = "EligibilityEndDate", DataType = "date")]
-        public DateTime SerializableEligibilityEndDate
-        {
-            get { return EligibilityEndDate ?? DateTime.MinValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public DateTime SerializableEligibilityEndDate => EligibilityEndDate ?? DateTime.MinValue;
 
         [XmlIgnore]
-        public bool SerializableEligibilityEndDateSpecified
-        {
-            get { return EligibilityEndDate.HasValue; }
-            set { }
-        }
+        [Browsable(false)]
+        public bool SerializableEligibilityEndDateSpecified => EligibilityEndDate.HasValue;
+
         #endregion
     }
 }

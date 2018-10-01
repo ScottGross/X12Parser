@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace OopFactory.X12.Hipaa.Common
 {
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class PostalAddress
     {
         public string Line1 { get; set; }
@@ -21,12 +22,12 @@ namespace OopFactory.X12.Hipaa.Common
         [XmlAttribute]
         public string CountrySubdivisionCode { get; set; }
 
-        public string Locale
+        public string Locale => $"{City}, {StateCode} {PostalCode}";
+
+        public override string ToString()
         {
-            get
-            {
-                return String.Format("{0}, {1} {2}", City, StateCode, PostalCode);
-            }
+            var line2 = string.IsNullOrEmpty(Line2) ? string.Empty : $" {Line2},";
+            return $"{Line1},{line2} {City}, {StateCode} {PostalCode}";
         }
     }
 }

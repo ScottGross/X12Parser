@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 
 namespace OopFactory.X12.Hipaa.Common
 {
@@ -12,6 +14,7 @@ namespace OopFactory.X12.Hipaa.Common
         NonPerson
     }
 
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class EntityType
     {
         [XmlAttribute]
@@ -22,6 +25,8 @@ namespace OopFactory.X12.Hipaa.Common
         public string Description { get; set; }
     }
 
+    [DevExpress.ExpressApp.DC.DomainComponent]
+    [XafDefaultProperty("FullName")]
     public class EntityName
     {
         public EntityName()
@@ -35,21 +40,25 @@ namespace OopFactory.X12.Hipaa.Common
 
         [XmlAttribute]
         public string PriorAuthorizationNumber { get; set; }
+
         [XmlAttribute]
         public string Suffix { get; set; }
 
         [XmlAttribute]
         public string Prefix { get; set; }
+
         [XmlAttribute]
         public string FirstName { get; set; }
+
         [XmlAttribute]
         public string MiddleName { get; set; }
 
+        [Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
         public Identification Identification { get; set; }
         
         public string Formatted()
         {
-            if (Type == null || Type.Qualifier == EntityNameQualifierEnum.NonPerson)
+            if (Type?.Qualifier == EntityNameQualifierEnum.NonPerson)
                 return LastName;
             else
             {
@@ -75,6 +84,8 @@ namespace OopFactory.X12.Hipaa.Common
                 return name.ToString().TrimEnd();
             }
         }
+
+        public string FullName => $"{FirstName} {LastName}";
 
         public override string ToString()
         {

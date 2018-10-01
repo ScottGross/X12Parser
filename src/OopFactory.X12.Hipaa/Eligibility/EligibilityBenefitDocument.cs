@@ -4,11 +4,13 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using DevExpress.ExpressApp.DC;
 using OopFactory.X12.Hipaa.Common;
 
 namespace OopFactory.X12.Hipaa.Eligibility
 {
     [XmlRoot(Namespace = "http://www.oopfactory.com/2011/XSL/Hipaa")]
+    [DomainComponent]
     public class EligibilityBenefitDocument
     {
         public EligibilityBenefitDocument()

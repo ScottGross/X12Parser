@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace OopFactory.X12.Hipaa.Common
 {
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class Contact
     {
         public Contact()
@@ -19,7 +20,7 @@ namespace OopFactory.X12.Hipaa.Common
         [XmlElement(ElementName="Number")]
         public List<ContactNumber> Numbers { get; set; }
     }
-
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class ContactNumber
     {
         [XmlAttribute]

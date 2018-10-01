@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 
 namespace OopFactory.X12.Hipaa.Common
 {
@@ -12,7 +15,7 @@ namespace OopFactory.X12.Hipaa.Common
         Male,
         Female
     }
-
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class Member : Entity
     {
         [XmlAttribute]        
@@ -21,9 +24,11 @@ namespace OopFactory.X12.Hipaa.Common
         [XmlIgnore]
         public DateTime? DateOfBirth { get; set; }
 
+        [Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
         public Lookup Relationship { get; set; }
         
         #region Serializable DateOfBirth Properties
+        [Browsable(false)]
         [XmlAttribute(AttributeName="DateOfBirth", DataType="date")]
         public DateTime SerializableDateOfBirth 
         {
@@ -32,6 +37,7 @@ namespace OopFactory.X12.Hipaa.Common
         }
 
         [XmlIgnore]
+        [Browsable(false)]
         public bool SerializableDateOfBirthSpecified 
         {
             get { return DateOfBirth.HasValue; }

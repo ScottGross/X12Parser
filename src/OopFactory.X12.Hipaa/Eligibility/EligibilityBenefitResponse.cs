@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using OopFactory.X12.Hipaa.Common;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.Persistent.Base;
 
 namespace OopFactory.X12.Hipaa.Eligibility
 {
     [XmlRoot(Namespace = "http://www.oopfactory.com/2011/XSL/Hipaa")]
+    [DevExpress.ExpressApp.DC.DomainComponent]
+    [EditorAlias(EditorAliases.ObjectPropertyEditor)]
     public class EligibilityBenefitResponse : EligibilityBenefitBase
     {
         public EligibilityBenefitResponse()

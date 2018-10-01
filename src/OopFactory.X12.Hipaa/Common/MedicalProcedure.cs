@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace OopFactory.X12.Hipaa.Common
 {
+    [DevExpress.ExpressApp.DC.DomainComponent]
     public class MedicalProcedure
     {
         [XmlAttribute]        
