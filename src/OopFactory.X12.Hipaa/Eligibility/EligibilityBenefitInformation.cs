@@ -68,7 +68,7 @@ namespace OopFactory.X12.Hipaa.Eligibility
         public Lookup CoverageLevel { get; set; }
 
         [XmlElement(ElementName = "ServiceType")]
-        [Appearance("ServiceTypes_Visibility", "ServiceTypes.Exists()")]
+        [Appearance("ServiceTypes_Visibility", "NOT ServiceTypes.Exists()",Visibility = ViewItemVisibility.Hide)]
         public List<Lookup> ServiceTypes { get; set; }
 
         [Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
