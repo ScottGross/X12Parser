@@ -6,16 +6,13 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>http://x12parser.codeplex.com/license</licenseUrl>
-    <projectUrl>http://x12parser.codeplex.com/</projectUrl>
-    <iconUrl>http://x12parser.codeplex.com/</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>X12 Parser</tags>
     <dependencies>
-      <dependency id="OopFactory.X12" version="$version$" />
+      <dependency id="OopFactory.X12" version="3.0.8.1" />
     </dependencies>
   </metadata>
 </package>
